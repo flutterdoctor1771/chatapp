@@ -1,0 +1,29 @@
+buildscript {
+    repositories {
+        google()
+        jcenter() // jcenter is deprecated but included here for legacy compatibility
+    }
+    dependencies {
+        // Correct the classpath for Google Services plugin
+        classpath 'com.google.gms:google-services:4.4.2'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.buildDir = "../build"
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
